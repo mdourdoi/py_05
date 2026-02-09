@@ -78,7 +78,7 @@ class TextProcessor(DataProcessor):
 
     def format_output(self, result: str) -> str:
         """Formats and displays the output"""
-        print(f"Processing data: {result}")
+        print(f"Processing data: \"{result}\"")
         if self.validate(result):
             ret = "Validation: Text data verified\nOutput: "
             ret += self.process(result)
@@ -91,7 +91,7 @@ class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         """Validates that data is a string formated as a log"""
         if isinstance(data, str):
-            if data[:6] == "ERROR:" or data[:6] == "INFO:":
+            if data[:6] == "ERROR:" or data[:5] == "INFO:":
                 return True
         return False
 
@@ -111,7 +111,7 @@ class LogProcessor(DataProcessor):
 
     def format_output(self, result: str) -> str:
         """Formats and displays the output"""
-        print(f"Processing data: {result}")
+        print(f"Processing data: \"{result}\"")
         if self.validate(result):
             ret = "Validation: Numeric data verified\nOutput: "
             ret += self.process(result)
@@ -146,3 +146,5 @@ if __name__ == "__main__":
 
     for i in range(3):
         print(f"Result {i + 1}:", processors[i].process(inputs[i]))
+    print()
+    print("Foundation systems online. Nexus ready for advanced streams")
