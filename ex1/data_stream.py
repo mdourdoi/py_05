@@ -224,17 +224,18 @@ class StreamProcessor:
         ret = ""
         for stream in stream_batch:
             if isinstance(stream, SensorStream):
-                ret += f"Sensor data: {stream.get_count()} readings processed\n"
+                ret += f"Sensor data: {stream.get_count()} readings processed"
                 self.sensor_error += stream.get_stats()["errors"]
             if isinstance(stream, TransactionStream):
                 ret += f"Transaction data: {stream.get_count()} "
-                ret += "operations processed\n"
+                ret += "operations processed"
                 self.transaction_error += stream.get_stats()["errors"]
             if isinstance(stream, EventStream):
-                ret += f"Event data: {stream.get_count()} events processed \n"
+                ret += f"Event data: {stream.get_count()} events processed "
                 self.event_error += stream.get_stats()["errors"]
             if not isinstance(stream, DataStream):
                 return "At least one value is not a DataStream"
+            ret += "\n"
         ret += "\n"
         ret += "Stream filtering active: High-priority data only\n"
         ret += "Filtered results : "
