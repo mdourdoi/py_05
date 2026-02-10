@@ -3,6 +3,7 @@ from typing import Any
 
 
 class DataProcessor(ABC):
+
     @abstractmethod
     def process(self, data: Any) -> str:
         """Blueprint for processing data"""
@@ -60,6 +61,7 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
+
     def validate(self, data: Any) -> bool:
         """Validates that data is a string"""
         if isinstance(data, str):
@@ -88,6 +90,7 @@ class TextProcessor(DataProcessor):
 
 
 class LogProcessor(DataProcessor):
+
     def validate(self, data: Any) -> bool:
         """Validates that data is a string formated as a log"""
         if isinstance(data, str):
@@ -148,3 +151,5 @@ if __name__ == "__main__":
         print(f"Result {i + 1}:", processors[i].process(inputs[i]))
     print()
     print("Foundation systems online. Nexus ready for advanced streams")
+    print("Processing mixed stream types through unified interface...")
+    print()
