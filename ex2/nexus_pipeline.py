@@ -1,5 +1,6 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Any, List, Dict, Union, Protocol
+import collections
 
 
 class ProcessingStage(Protocol):
@@ -11,21 +12,21 @@ class ProcessingStage(Protocol):
 
 class InputStage:
 
-    def process(self, data: Any) -> Dict:
-        """Blueprint to input data"""
+    def process(self, data: Any) -> Any:
+        """Input data of different types"""
         ...
 
 
 class TransformStage:
 
-    def process(self, data: Any) -> Dict:
+    def process(self, data: Any) -> Any:
         """Blueprint to process data"""
         ...
 
 
 class OutputStage:
 
-    def process(self, data: Any) -> str:
+    def process(self, data: Any) -> Any:
         """Blueprint to output processed data"""
         ...
 
@@ -46,3 +47,21 @@ class ProcessingPipeline(ABC):
             or isinstance(stage, self.TransformStage)
                 or isinstance(stage, self.OutputStage)):
             self.__stage.append(stage)
+
+    @abstractmethod
+    def process(self, data: Any) -> Any:
+        raise NotImplementedError
+
+
+class JSONAdapter(ProcessingPipeline):
+    def process(self, data: Any) -> Union[str, Any]:
+
+
+class CSVAdapter(ProcessingPipeline):
+
+    def process(self, data: Any) -> Union[str, Any]:
+
+
+class StreamAdapter(ProcessingPipeline):
+
+    def process(self, data: Any) -> Union[str, Any]:
