@@ -6,9 +6,9 @@ class DataStream(ABC):
 
     def __init__(self, stream_id: str) -> None:
         """Basic constructor for data streams"""
-        self.__stream_id = str(stream_id)
-        self.__count = 0
-        self.__errors = 0
+        self.__stream_id: int = str(stream_id)
+        self.__count: int = 0
+        self.__errors: int = 0
 
     def get_stream_id(self) -> str:
         """Gets the stream id"""
@@ -104,7 +104,7 @@ class SensorStream(DataStream):
             if len(temp_batch) == 0:
                 ret += "no temperature input"
             else:
-                ret += f"avg temp: {total_temp / len(temp_batch)}"
+                ret += f"avg temp: {total_temp / len(temp_batch)}°C"
             return ret
         else:
             return "Invalid data batch"
@@ -215,14 +215,15 @@ class StreamProcessor:
 
     def __init__(self) -> None:
         """Constructor for DataStreams"""
-        self.sensor_error = 0
-        self.transaction_error = 0
-        self.event_error = 0
+        self.sensor_error: int = 0
+        self.transaction_error: int = 0
+        self.event_error: int = 0
 
     def batch_processing(self, *stream_batch: DataStream) -> str:
         """Processes a batch of DataStream"""
         ret = ""
         for stream in stream_batch:
+            ret += "- "
             if isinstance(stream, SensorStream):
                 ret += f"Sensor data: {stream.get_count()} readings processed"
                 self.sensor_error += stream.get_stats()["errors"]
@@ -262,7 +263,7 @@ if __name__ == "__main__":
     print(transaction.process_batch(["buy:100", "sell:150", "buy:75"]))
     print()
 
-    print("Initializing Transaction Stream...")
+    print("Initializing Event Stream...")
     event = EventStream("EVENT_001")
     print(event.process_batch(["login", "error", "logout"]))
     print()

@@ -257,7 +257,7 @@ class NexusManager:
                 return str(cur_error)
 
         temp = InputStage().process(data)
-        print(f"{temp['size']} records processed ", end="")
+        print(f"Chain result: {temp['size']} records processed ", end="")
         print(f"through {len(pipeline_ids)}-stage pipeline")
         successes = sum(pipeline.processed_batches
                         for pipeline in self.pipelines.values())
@@ -299,9 +299,10 @@ def build_standard_stages(pipeline: ProcessingPipeline) -> None:
 
 if __name__ == "__main__":
     print("=== CODE NEXUS - ENTERPRISE PIPELINE SYSTEM ===")
+    print()
     print("Initializing Nexus Manager...")
     manager = NexusManager()
-    print("Pipeline capacity: polymorphic multi-format processing")
+    print("Pipeline capacity: 1000 streams/second")
     print()
 
     print("Creating Data Processing Pipeline...")
@@ -323,12 +324,14 @@ if __name__ == "__main__":
     print()
 
     print("=== Multi-Format Data Processing ===")
+    print()
     json_input = {"sensor": "temp", "value": 23.5, "unit": "C"}
     csv_input = "user,action,timestamp\nalice,login,2026-02-11"
     stream_input = [21.1, 22.3, 23.0, 22.0, 22.1]
 
     print("Processing JSON data through pipeline...")
     print(f"Input: {json_input}")
+    print("Transform: Enriched with metadata and validation")
     print(
         "Output:",
         manager.process_with_pipeline(
@@ -338,11 +341,13 @@ if __name__ == "__main__":
 
     print("Processing CSV data through same pipeline...")
     print(f"Input: {csv_input.splitlines()}")
+    print("Transform: Parsed and structured data")
     print("Output:", manager.process_with_pipeline("CSV_PIPE_001", csv_input))
     print()
 
     print("Processing Stream data through same pipeline...")
     print("Input: Real-time sensor stream")
+    print("Transform: Aggregated and filtered")
     print(
         "Output:",
         manager.process_with_pipeline(
@@ -375,7 +380,7 @@ if __name__ == "__main__":
     chain_result = manager_chain.chain_pipelines(
         ["JSON_INPUT_001", "JSON_TRANSFORM_001", "JSON_OUTPUT_001"],
         big_stream_input)
-    print("Chain result:", chain_result)
+    print(chain_result)
     print()
 
     print("=== Error Recovery Test ===")

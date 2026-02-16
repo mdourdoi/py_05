@@ -42,7 +42,7 @@ class NumericProcessor(DataProcessor):
     def process(self, data: Any) -> str:
         """Processes numeric lists only"""
         if self.validate(data):
-            ret = f"Processed {len(data)} values, "
+            ret = f"Processed {len(data)} numeric values, "
             ret += f"sum={sum(data)}, avg={sum(data) / len(data)}"
         else:
             ret = "Error during processing: "
@@ -116,7 +116,7 @@ class LogProcessor(DataProcessor):
         """Formats and displays the output"""
         print(f"Processing data: \"{result}\"")
         if self.validate(result):
-            ret = "Validation: Numeric data verified\nOutput: "
+            ret = "Validation: Log entry verified\nOutput: "
             ret += self.process(result)
             return ret
         else:
@@ -145,11 +145,9 @@ if __name__ == "__main__":
     print("=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...")
     processors = [NumericProcessor(), TextProcessor(), LogProcessor()]
-    inputs = [[1, 2, 3], "Hello Nexus", "INFO: System ready"]
+    inputs = [[1, 2, 3], "Hello Nexus!", "INFO: System ready"]
 
     for i in range(3):
         print(f"Result {i + 1}:", processors[i].process(inputs[i]))
     print()
     print("Foundation systems online. Nexus ready for advanced streams")
-    print("Processing mixed stream types through unified interface...")
-    print()
