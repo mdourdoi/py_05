@@ -66,7 +66,7 @@ class TransformStage:
     def process(self, data: Any) -> Any:
         """Marks data as transformed"""
         if isinstance(data, dict):
-            enriched = dict(data)
+            enriched = data
             enriched["transformed"] = True
             return enriched
         else:
@@ -115,6 +115,8 @@ class ProcessingPipeline(ABC):
             or isinstance(stage, TransformStage)
                 or isinstance(stage, OutputStage)):
             self.stages.append(stage)
+        else:
+            print(f"Error: {stage} is not a valid stage")
 
     @abstractmethod
     def process(self, data: Any) -> Any:
@@ -221,6 +223,7 @@ class StreamAdapter(ProcessingPipeline):
 
 
 class NexusManager:
+
     def __init__(self) -> None:
         """Constructor for the NexusManager"""
         self.pipelines: Dict[str, ProcessingPipeline] = {}
